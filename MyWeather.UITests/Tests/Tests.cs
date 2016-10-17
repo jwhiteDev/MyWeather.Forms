@@ -74,6 +74,18 @@ namespace MyWeather.UITests
 			Assert.IsNotNull(actualTemperatureLabelText, "Temperature Text Is Null");
 		}
 
+		[Test]
+		public void TapCrashButton()
+		{
+			
+		}
+
+		[Test]
+		public void TapFeedbackButton()
+		{
+			
+		}
+
 		void ToggleScreens(bool isToggleScreensEnabled)
 		{
 			if (!isToggleScreensEnabled)

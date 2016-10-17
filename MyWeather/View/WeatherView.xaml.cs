@@ -3,20 +3,34 @@
 using HockeyApp;
 using System;
 using MyWeather.Helpers;
+using MyWeather.Services;
 
 namespace MyWeather.View
 {
-    public partial class WeatherView : ContentPage
-    {
-        public WeatherView()
-        {
-            InitializeComponent();
+	public partial class WeatherView : ContentPage
+	{
+		public WeatherView()
+		{
+			InitializeComponent();
 
-            if (Device.OS == TargetPlatform.iOS)
-                Icon = new FileImageSource { File = "tab1.png" };
+			if (Device.OS == TargetPlatform.iOS)
+				Icon = new FileImageSource { File = "tab1.png" };
+
+			#if DEBUG
+			var feedbackToolBar = new ToolbarItem
+			{
+				Icon = "Add",
+				AutomationId = AutomationIdConstants.FeedbackButton
+			};
+			feedbackToolBar.Clicked += (sender, e) => 
+			{
+				DependencyService.Get<IHockeyappService>()?.GiveFeedback();
+			};
+			ToolbarItems.Add(feedbackToolBar);
+			#endif
 
 			InitializeAutomationIds();
-        }
+		}
 
 		protected override void OnAppearing()
 		{
@@ -33,5 +47,5 @@ namespace MyWeather.View
 			GetWeatherButton.AutomationId = AutomationIdConstants.GetWeatherButton;
 			GetWeatherActivityIndicator.AutomationId = AutomationIdConstants.GetWeatherActivityIndicator;
 		}
-    }
+	}
 }
