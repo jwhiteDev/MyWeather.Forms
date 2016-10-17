@@ -11,17 +11,14 @@ namespace MyWeather.UITests
 	[TestFixture(Platform.iOS)]
 	public class Tests : BaseTest
 	{
-		IApp app;
-		Platform platform;
-
 		public Tests(Platform platform) : base(platform)
 		{
-			this.platform = platform;
 		}
 
 		public override void TestSetup()
 		{
 			base.TestSetup();
+			WeatherPage.WaitForPageToLoad();
 		}
 
 		[TestCase("San Francisco,CA", true)]
@@ -74,16 +71,29 @@ namespace MyWeather.UITests
 			Assert.IsNotNull(actualTemperatureLabelText, "Temperature Text Is Null");
 		}
 
+		[Ignore("This Test Will Crash The App")]
 		[Test]
 		public void TapCrashButton()
 		{
-			
+			//Arrange
+
+			//Act
+			WeatherPage.TapForecastTab();
+			ForecastPage.TapCrashButton();
+
+			//Assert
 		}
 
 		[Test]
 		public void TapFeedbackButton()
 		{
-			
+			//Arrange
+
+			//Act
+			WeatherPage.TapFeedbackButton();
+
+			//Assert
+			Assert.IsTrue(WeatherPage.IsFeedbackPageOpen());
 		}
 
 		void ToggleScreens(bool isToggleScreensEnabled)
