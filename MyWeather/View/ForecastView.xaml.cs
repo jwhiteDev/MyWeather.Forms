@@ -32,7 +32,7 @@ namespace MyWeather.View
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
-			HockeyappHelpers.TrackEvent(HockeyappConstants.WeatherPageAppeared);
+			HockeyappHelpers.TrackEvent(HockeyappConstants.ForecastPageAppeared);
 		}
     }
 }
