@@ -16,7 +16,6 @@ namespace MyWeather.View
 			if (Device.OS == TargetPlatform.iOS)
 				Icon = new FileImageSource { File = "tab1.png" };
 
-			#if DEBUG
 			var feedbackToolBar = new ToolbarItem
 			{
 				Icon = "Add",
@@ -27,7 +26,6 @@ namespace MyWeather.View
 				DependencyService.Get<IHockeyappService>()?.GiveFeedback();
 			};
 			ToolbarItems.Add(feedbackToolBar);
-			#endif
 
 			InitializeAutomationIds();
 		}
