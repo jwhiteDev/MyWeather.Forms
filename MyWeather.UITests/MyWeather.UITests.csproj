@@ -42,6 +42,7 @@
     <Compile Include="Tests\Tests.cs" />
     <Compile Include="Tests\BaseTest.cs" />
     <Compile Include="Pages\ForecastPage.cs" />
+    <Compile Include="Tests\ReplTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

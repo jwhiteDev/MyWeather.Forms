@@ -1,13 +1,9 @@
-﻿<Properties StartupConfiguration="{7F106FBA-12E5-4D92-9F4C-38EAD1652E7E}|Default">
+﻿<Properties StartupConfiguration="{65B45A0F-D6D8-432F-B36D-D7D41675DC76}|Default">
+  <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android.Nexus_5_API_24" />
   <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather.UITests/Pages/WeatherPage.cs">
     <Files>
-      <File FileName="MyWeather.Droid/MainApplication.cs" Line="50" Column="45" />
-      <File FileName="MyWeather.Droid/MainActivity.cs" Line="31" Column="21" />
-      <File FileName="MyWeather/Model/Weather.cs" Line="1" Column="1" />
-      <File FileName="MyWeather/ViewModel/WeatherViewModel.cs" Line="31" Column="14" />
-      <File FileName="MyWeather.UITests/Tests/Tests.cs" Line="68" Column="33" />
-      <File FileName="MyWeather.UITests/Pages/ForecastPage.cs" Line="7" Column="107" />
-      <File FileName="MyWeather.UITests/Pages/WeatherPage.cs" Line="68" Column="36" />
+      <File FileName="MyWeather.UITests/Pages/ForecastPage.cs" Line="1" Column="1" />
+      <File FileName="MyWeather.UITests/Pages/WeatherPage.cs" Line="32" Column="5" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
@@ -15,7 +11,7 @@
           <Node name="MyWeather" expanded="True">
             <Node name="MyWeather.UITests" expanded="True">
               <Node name="Test Apps" expanded="True">
-                <Node name="MyWeather.Android" selected="True" />
+                <Node name="MyWeather.iOS" selected="True" />
               </Node>
               <Node name="MyWeather" expanded="True">
                 <Node name="UITests" expanded="True">
@@ -37,12 +33,10 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/brandonm/Projects/GitHub/MyWeather.Forms/MyWeather.UITests/Tests/Tests.cs" line="37" column="1" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.MyWeather.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.FA739F19-02F7-4953-B319-EFF6A611CDAB" />
+  <MonoDevelop.Ide.ItemProperties.MyWeather.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.F45F9A74-032F-4623-9C6E-31FB30A377CA" />
 </Properties>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 
 using Xamarin.UITest;
 
@@ -11,6 +12,7 @@ namespace MyWeather.UITests
 	{
 		readonly Query ConditionLabel;
 		readonly Query GetWeatherButton;
+		readonly Query FeedbackButton;
 		readonly Query LocationEntry;
 		readonly Query TempLabel;
 		readonly Query UseGPSSwitch;
@@ -24,6 +26,11 @@ namespace MyWeather.UITests
 			TempLabel = x => x.Marked(AutomationIdConstants.TempLabel);
 			UseGPSSwitch = x => x.Marked(AutomationIdConstants.UseGPSSwitch);
 			GetWeatherActivityIndicator = x => x.Marked(AutomationIdConstants.GetWeatherActivityIndicator);
+
+			if (OniOS)
+				FeedbackButton = x => x.Marked(AutomationIdConstants.FeedbackButton);
+			else
+				FeedbackButton = x => x.Class("ActionMenuItemView");
 
 			WaitForPageToLoad(20, this);
 		}
@@ -61,7 +68,7 @@ namespace MyWeather.UITests
 
 		public void WaitForNoActivityIndicator(int timeoutInSeconds = 60)
 		{
-			App.WaitForNoElement(GetWeatherActivityIndicator, "Activity Indicator Never Disappeared",TimeSpan.FromSeconds(timeoutInSeconds));
+			App.WaitForNoElement(GetWeatherActivityIndicator, "Activity Indicator Never Disappeared", TimeSpan.FromSeconds(timeoutInSeconds));
 			App.Screenshot("Activity Indicator Disappeared");
 		}
 
@@ -69,6 +76,36 @@ namespace MyWeather.UITests
 		{
 			var getWeatherButtonQuery = App.Query(GetWeatherButton);
 			return getWeatherButtonQuery.Length > 0;
+		}
+
+		public void TapFeedbackButton()
+		{
+			App.Tap(FeedbackButton);
+			App.Screenshot("Feedback Button Tapped");
+
+			if (OniOS)
+			{
+				App.Tap("Review Existing Feedback");
+				App.Screenshot("Review Existing Feedback Tapped");
+			}
+
+			Thread.Sleep(1000);
+
+			App.DismissKeyboard();
+		}
+
+		public bool IsFeedbackPageOpen()
+		{
+			string queryString;
+
+			if (OniOS)
+				queryString = "Feedback";
+			else
+				queryString = "input_name";
+
+			var feedbackTitleQuery = App.Query(queryString);
+
+			return feedbackTitleQuery.Length > 0;
 		}
 	}
 }
