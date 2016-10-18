@@ -19,6 +19,7 @@ namespace MyWeather.UITests
 		{
 			base.TestSetup();
 			WeatherPage.WaitForPageToLoad();
+			App.Screenshot("App Launched");
 		}
 
 		[TestCase("San Francisco,CA", true)]
