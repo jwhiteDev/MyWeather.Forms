@@ -1,16 +1,18 @@
 ﻿<Properties StartupConfiguration="{7F106FBA-12E5-4D92-9F4C-38EAD1652E7E}|Default">
   <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android.Nexus_5_API_24" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather/ViewModel/WeatherViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather.UWP/Package.appxmanifest">
     <Files>
-      <File FileName="MyWeather/View/ForecastView.xaml.cs" Line="33" Column="52" />
-      <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="41" Column="52" />
-      <File FileName="MyWeather/ViewModel/WeatherViewModel.cs" Line="145" Column="22" />
+      <File FileName="MyWeather/View/ForecastView.xaml.cs" Line="33" Column="32" />
+      <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="1" Column="1" />
+      <File FileName="MyWeather/ViewModel/WeatherViewModel.cs" Line="142" Column="18" />
+      <File FileName="MyWeather.iOS/Info.plist" />
+      <File FileName="MyWeather.UWP/Package.appxmanifest" Line="3" Column="102" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/brandonm/Projects/GitHub/MyWeather.Forms/MyWeather/Helpers/HockeyappHelpers.cs" line="45" column="1" />
+      <Breakpoint file="/Users/brandonm/Projects/GitHub/MyWeather.Forms/MyWeather/Helpers/HockeyappHelpers.cs" line="52" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

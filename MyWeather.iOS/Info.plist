@@ -7,7 +7,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.refractored.myweather</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.1.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
@@ -49,6 +49,6 @@
 	<key>CFBundleName</key>
 	<string>MyWeather.iOS</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 </dict>
 </plist>
