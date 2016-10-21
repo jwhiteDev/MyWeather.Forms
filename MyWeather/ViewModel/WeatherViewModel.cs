@@ -142,6 +142,7 @@ namespace MyWeather.ViewModels
             catch (Exception ex)
             {
                 Temp = "Unable to get Weather";
+				HockeyappHelpers.Report(ex);
             }
             finally
             {
