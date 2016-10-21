@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
 using HockeyApp.Android;
 
 using MyWeather.Droid;
-using MyWeather.Services;
 
 
 [assembly: Xamarin.Forms.Dependency(typeof(HockeyappFeedbackService_Android))]
