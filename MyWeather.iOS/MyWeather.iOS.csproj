@@ -213,7 +213,7 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Services\HockeyappService_iOS.cs" />
+    <Compile Include="Services\HockeyappFeedbackService_iOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\tab1.png" />

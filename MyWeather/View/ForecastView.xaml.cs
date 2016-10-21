@@ -1,20 +1,21 @@
-﻿using Xamarin.Forms;
+﻿using System;
 
-using HockeyApp;
+using Xamarin.Forms;
+
 using MyWeather.Helpers;
 
 namespace MyWeather.View
 {
-    public partial class ForecastView : ContentPage
-    {
-        public ForecastView()
-        {
-            InitializeComponent();
-            if (Device.OS == TargetPlatform.iOS)
-                Icon = new FileImageSource { File = "tab2.png" };
-            ListViewWeather.ItemTapped += (sender, args) => ListViewWeather.SelectedItem = null;
+	public partial class ForecastView : ContentPage
+	{
+		public ForecastView()
+		{
+			InitializeComponent();
+			if (Device.OS == TargetPlatform.iOS)
+				Icon = new FileImageSource { File = "tab2.png" };
+			ListViewWeather.ItemTapped += (sender, args) => ListViewWeather.SelectedItem = null;
 
-			#if DEBUG
+#if DEBUG
 			var crashButtonToolBar = new ToolbarItem
 			{
 				Icon = "Crash",
@@ -22,17 +23,24 @@ namespace MyWeather.View
 			};
 			crashButtonToolBar.Clicked += (sender, e) =>
 			{
-				HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
-				throw new System.Exception(HockeyappConstants.CrashButtonTapped);
+				try
+				{
+					HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
+					throw new System.Exception(HockeyappConstants.CrashButtonTapped);
+				}
+				catch (Exception ex)
+				{
+					HockeyappHelpers.Report(ex);
+				}
 			};
 			ToolbarItems.Add(crashButtonToolBar);
-			#endif
-        }
+#endif
+		}
 
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 			HockeyappHelpers.TrackEvent(HockeyappConstants.ForecastPageAppeared);
 		}
-    }
+	}
 }

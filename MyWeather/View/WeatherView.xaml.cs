@@ -21,9 +21,9 @@ namespace MyWeather.View
 				Icon = "Add",
 				AutomationId = AutomationIdConstants.FeedbackButton
 			};
-			feedbackToolBar.Clicked += (sender, e) => 
+			feedbackToolBar.Clicked += (sender, e) =>
 			{
-				DependencyService.Get<IHockeyappService>()?.GiveFeedback();
+				DependencyService.Get<IHockeyappFeedbackService>()?.GiveFeedback();
 			};
 			ToolbarItems.Add(feedbackToolBar);
 

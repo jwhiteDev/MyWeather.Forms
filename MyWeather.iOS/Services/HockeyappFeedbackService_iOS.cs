@@ -9,10 +9,10 @@ using HockeyApp.iOS;
 using MyWeather.iOS;
 using MyWeather.Services;
 
-[assembly: Xamarin.Forms.Dependency(typeof(HockeyappService_iOS))]
+[assembly: Xamarin.Forms.Dependency(typeof(HockeyappFeedbackService_iOS))]
 namespace MyWeather.iOS
 {
-	public class HockeyappService_iOS : IHockeyappService
+	public class HockeyappFeedbackService_iOS : IHockeyappFeedbackService
 	{
 		public async Task GiveFeedback()
 		{
