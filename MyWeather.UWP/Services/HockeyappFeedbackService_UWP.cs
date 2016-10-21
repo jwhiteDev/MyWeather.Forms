@@ -12,7 +12,7 @@ namespace MyWeather.UWP.Services
     {
         public Task GiveFeedback()
         {
-			throw new Exception("Give Feedback Not Implemented in UWP");
+			throw new System.Exception("Give Feedback Not Implemented in UWP");
         }
     }
 }

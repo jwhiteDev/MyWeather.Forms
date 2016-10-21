@@ -63,10 +63,7 @@ namespace MyWeather.Helpers
 				{ _pathType.Windows, @"\" }
 			};
 
-			if (filePath.Contains(directorySeparator[_pathType.Linux]))
-				pathType = _pathType.Linux;
-			else
-				pathType = _pathType.Windows;
+			pathType = filePath.Contains(directorySeparator[_pathType.Linux]) ? _pathType.Linux : _pathType.Windows;
 
 			while (true)
 			{
