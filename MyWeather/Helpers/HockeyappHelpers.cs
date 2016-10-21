@@ -8,12 +8,7 @@ namespace MyWeather.Helpers
 {
 	public static class HockeyappHelpers
 	{
-		enum PathType { Windows, Linux };
-		readonly static Dictionary<PathType, string> DirectorySeparator = new Dictionary<PathType, string>
-		{
-			{PathType.Linux, "/"},
-			{PathType.Windows, @"\" }
-		};
+		enum _pathType { Windows, Linux };
 
 		public static void TrackEvent(string eventName)
 		{
@@ -45,39 +40,43 @@ namespace MyWeather.Helpers
 		/// <summary>
 		/// Reports a caught exception to Hockeyapp
 		/// </summary>
-		/// <param name="exception">The Exception Caught in the Try/Catch Block.</param>
-		/// <param name="currentObjectType">The type of the current object, e.g. GetType().</param>
-		/// <param name="lineNumber">Line number.</param>
-		/// <param name="callerMembername">Name.</param>
 		public static void Report(Exception exception, [CallerFilePath] string filePath = "", [CallerLineNumber] int lineNumber = 0, [CallerMemberName] string callerMembername = "")
 		{
-			var fileName = getFileNameWithoutFilePath(filePath);
+			var fileName = GetFileNameFromFilePath(filePath);
 
 			var errorReport = $"Error: {exception.Message}";
 			errorReport += $", Line Number: {lineNumber}";
 			errorReport += $", Caller Name: {callerMembername}";
 			errorReport += $", File Name: {fileName}";
+
 			TrackEvent(errorReport);
 		}
 
-		static string getFileNameWithoutFilePath(string filePath)
+		static string GetFileNameFromFilePath(string filePath)
 		{
 			string fileName;
-			PathType pathType;
-			if (filePath.Contains("/"))
-				pathType = PathType.Linux;
+			_pathType pathType;
+
+			var directorySeparator = new Dictionary<_pathType, string>
+			{
+				{ _pathType.Linux, "/" },
+				{ _pathType.Windows, @"\" }
+			};
+
+			if (filePath.Contains(directorySeparator[_pathType.Linux]))
+				pathType = _pathType.Linux;
 			else
-				pathType = PathType.Windows;
+				pathType = _pathType.Windows;
 
 			while (true)
 			{
-				if(!(filePath.Contains(DirectorySeparator[pathType])))
+				if (!(filePath.Contains(directorySeparator[pathType])))
 				{
 					fileName = filePath;
 					break;
 				}
 
-				var indexOfDictionarySeparator = filePath.IndexOf(DirectorySeparator[pathType], StringComparison.Ordinal);
+				var indexOfDictionarySeparator = filePath.IndexOf(directorySeparator[pathType], StringComparison.Ordinal);
 				var newStringStartIndex = indexOfDictionarySeparator + 1;
 
 				filePath = filePath.Substring(newStringStartIndex, filePath.Length - newStringStartIndex);
