@@ -23,15 +23,8 @@ namespace MyWeather.View
 			};
 			crashButtonToolBar.Clicked += (sender, e) =>
 			{
-				try
-				{
-					HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
-					throw new System.Exception(HockeyappConstants.CrashButtonTapped);
-				}
-				catch (Exception ex)
-				{
-					HockeyappHelpers.Report(ex);
-				}
+				HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
+				throw new Exception(HockeyappConstants.CrashButtonTapped);
 			};
 			ToolbarItems.Add(crashButtonToolBar);
 #endif
