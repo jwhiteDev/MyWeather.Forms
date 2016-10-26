@@ -1,6 +1,10 @@
 ﻿<Properties StartupConfiguration="{7F106FBA-12E5-4D92-9F4C-38EAD1652E7E}|Default">
   <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android.Nexus_5_API_24" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather/ViewModel/WeatherViewModel.cs">
+    <Files>
+      <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="51" Column="4" />
+      <File FileName="MyWeather/ViewModel/WeatherViewModel.cs" Line="114" Column="32" />
+    </Files>
     <Pads>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
         <State name="__root__">
@@ -9,7 +13,19 @@
               <Node name="Test Apps" expanded="True">
                 <Node name="MyWeather.iOS" selected="True" />
               </Node>
-              <Node name="MyWeather" expanded="True" />
+              <Node name="MyWeather" expanded="True">
+                <Node name="UITests" expanded="True">
+                  <Node name="Tests" expanded="True">
+                    <Node name="Tests(Android)" expanded="True">
+                      <Node name="GetWeatherUsingGPS" expanded="True" />
+                      <Node name="GetWeatherUsingText" expanded="True" />
+                    </Node>
+                    <Node name="Tests(iOS)" expanded="True">
+                      <Node name="GetWeatherUsingText" expanded="True" />
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>
