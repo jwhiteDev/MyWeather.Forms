@@ -44,10 +44,10 @@ namespace MyWeather.Helpers
 		{
 			var fileName = GetFileNameFromFilePath(filePath);
 
-			var errorReport = $"Error: {exception.Message}";
-			errorReport += $", Line Number: {lineNumber}";
-			errorReport += $", Caller Name: {callerMembername}";
-			errorReport += $", File Name: {fileName}";
+			var errorReport = $"Error: {exception.Message} ";
+			errorReport += $"Line Number: {lineNumber} ";
+			errorReport += $"Caller Name: {callerMembername} ";
+			errorReport += $"File Name: {fileName}";
 
 			TrackEvent(errorReport);
 		}

@@ -105,6 +105,33 @@ namespace MyWeather.ViewModels
             await ExecuteGetWeatherCommand();
         }));
 
+		ICommand crashButtonTapped;
+		public ICommand CrashButtonTapped =>
+				crashButtonTapped ??
+		(crashButtonTapped = new Command(() =>
+		{
+			ExecuteCrashButtonCommand();
+		}));
+
+		ICommand feedbackButtonTapped;
+		public ICommand FeedbackButtonTapped =>
+				feedbackButtonTapped ??
+		(feedbackButtonTapped = new Command(() =>
+		{
+			ExecuteFeedbackButtonCommand();
+		}));
+
+		private void ExecuteCrashButtonCommand()
+		{
+			HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
+			throw new Exception(HockeyappConstants.CrashButtonTapped);
+		}
+
+		private void ExecuteFeedbackButtonCommand()
+		{
+			HockeyappHelpers.TrackEvent(HockeyappConstants.FeedbackButtonTapped);
+			DependencyService.Get<IHockeyappFeedbackService>()?.GiveFeedback();
+		}
 
         private async Task ExecuteGetWeatherCommand()
         {

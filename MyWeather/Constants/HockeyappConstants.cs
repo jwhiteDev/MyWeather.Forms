@@ -15,6 +15,7 @@ namespace MyWeather
 		public const string WeatherPageAppeared = "Weather Page Appeared";
 		public const string ForecastPageAppeared = "Forecast Page Appeared";
 		public const string GPSSwitchToggled = "GPS Switch Toggled";
+		public const string FeedbackButtonTapped = "Feedback Button Tapped";
 		#endregion
 	}
 }
