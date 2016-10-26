@@ -16,16 +16,13 @@ namespace MyWeather.View
 			if (Device.OS == TargetPlatform.iOS)
 				Icon = new FileImageSource { File = "tab1.png" };
 
-			var feedbackToolBar = new ToolbarItem
+			var feedbackToolBarItem = new ToolbarItem
 			{
 				Icon = "Add",
 				AutomationId = AutomationIdConstants.FeedbackButton
 			};
-			feedbackToolBar.Clicked += (sender, e) =>
-			{
-				DependencyService.Get<IHockeyappFeedbackService>()?.GiveFeedback();
-			};
-			ToolbarItems.Add(feedbackToolBar);
+			feedbackToolBarItem.SetBinding(ToolbarItem.CommandProperty, "FeedbackButtonTapped");
+			ToolbarItems.Add(feedbackToolBarItem);
 
 			InitializeAutomationIds();
 		}

@@ -16,17 +16,13 @@ namespace MyWeather.View
 			ListViewWeather.ItemTapped += (sender, args) => ListViewWeather.SelectedItem = null;
 
 #if DEBUG
-			var crashButtonToolBar = new ToolbarItem
+			var crashButtonToolBarItem = new ToolbarItem
 			{
 				Icon = "Crash",
 				AutomationId = AutomationIdConstants.CrashButton
 			};
-			crashButtonToolBar.Clicked += (sender, e) =>
-			{
-				HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
-				throw new Exception(HockeyappConstants.CrashButtonTapped);
-			};
-			ToolbarItems.Add(crashButtonToolBar);
+			crashButtonToolBarItem.SetBinding(ToolbarItem.CommandProperty, "CrashButtonTapped");
+			ToolbarItems.Add(crashButtonToolBarItem);
 #endif
 		}
 
