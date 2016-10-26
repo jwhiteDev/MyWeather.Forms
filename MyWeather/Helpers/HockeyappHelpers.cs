@@ -73,8 +73,8 @@ namespace MyWeather.Helpers
 					break;
 				}
 
-				var indexOfDictionarySeparator = filePath.IndexOf(directorySeparator[pathType], StringComparison.Ordinal);
-				var newStringStartIndex = indexOfDictionarySeparator + 1;
+				var indexOfDirectorySeparator = filePath.IndexOf(directorySeparator[pathType], StringComparison.Ordinal);
+				var newStringStartIndex = indexOfDirectorySeparator + 1;
 
 				filePath = filePath.Substring(newStringStartIndex, filePath.Length - newStringStartIndex);
 			}
