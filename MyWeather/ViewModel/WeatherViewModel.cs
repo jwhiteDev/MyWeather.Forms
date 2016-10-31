@@ -20,6 +20,8 @@ namespace MyWeather.ViewModels
 {
 	public class WeatherViewModel : INotifyPropertyChanged
 	{
+		const string _errorMessage = "Unable to get Weather";
+
 		WeatherService WeatherService { get; } = new WeatherService();
 
 		string location = Settings.City;
@@ -172,25 +174,42 @@ namespace MyWeather.ViewModels
 			}
 			catch (Exception ex)
 			{
-				Temp = "Unable to get Weather";
+				Temp = _errorMessage;
 				HockeyappHelpers.Report(ex);
 			}
 			finally
 			{
-				var eventDictionaryHockeyApp = new Dictionary<string, string>
-				{
-					{"Use GPS Enabled", UseGPS.ToString()}
-				};
-
-				var locationCityName = UseGPS
-					? Condition.Substring(0, Condition.IndexOf(":", StringComparison.Ordinal))
-					: Location.Substring(0, Location.IndexOf(",", StringComparison.Ordinal));
-
-				eventDictionaryHockeyApp.Add("Location", locationCityName);
-
-				HockeyappHelpers.TrackEvent(HockeyappConstants.GetWeatherButtonTapped, eventDictionaryHockeyApp, null);
-
 				IsBusy = false;
+				TrackGetWeatherEvent();
+			}
+		}
+
+		void TrackGetWeatherEvent()
+		{
+			var eventDictionaryHockeyApp = new Dictionary<string, string>
+			{
+				{"Use GPS Enabled", UseGPS.ToString()}
+			};
+
+			try
+			{
+				if (!Temp.Contains(_errorMessage))
+				{
+
+					var locationCityName = UseGPS
+						? Condition?.Substring(0, Condition.IndexOf(":", StringComparison.Ordinal))
+						: Location?.Substring(0, Location.IndexOf(",", StringComparison.Ordinal));
+
+					eventDictionaryHockeyApp.Add("Location", locationCityName);
+				}
+			}
+			catch (Exception ex)
+			{
+				HockeyappHelpers.Report(ex);
+			}
+			finally
+			{
+				HockeyappHelpers.TrackEvent(HockeyappConstants.GetWeatherButtonTapped, eventDictionaryHockeyApp, null);
 			}
 		}
 
