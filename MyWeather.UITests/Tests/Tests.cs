@@ -46,7 +46,7 @@ namespace MyWeather.UITests
 			actualConditionCityText = ParseConditionCityFromString(WeatherPage.GetConditionText(), ':');
 			actualTemperatureLabelText = WeatherPage.GetTemperatureText();
 			Assert.AreEqual(expectedConditionCityText, actualConditionCityText, "Exptected Condition City Does Not Match Actual Condition City");
-			Assert.IsNotEmpty(actualTemperatureLabelText, "Temperature Text Is Null");
+			Assert.IsNotEmpty(actualTemperatureLabelText, "Temperature Text Is Empty");
 		}
 
 

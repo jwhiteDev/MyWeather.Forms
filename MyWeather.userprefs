@@ -1,12 +1,11 @@
 ﻿<Properties StartupConfiguration="{65B45A0F-D6D8-432F-B36D-D7D41675DC76}|Default">
   <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android.Nexus_5_API_24" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather/Services/WeatherService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather.UITests/Tests/Tests.cs">
     <Files>
-      <File FileName="MyWeather/ViewModel/WeatherViewModel.cs" Line="168" Column="44" />
-      <File FileName="MyWeather.UITests/Tests/Tests.cs" Line="69" Column="50" />
-      <File FileName="MyWeather.UITests/Pages/WeatherPage.cs" Line="46" Column="32" />
+      <File FileName="MyWeather.UITests/Tests/Tests.cs" Line="59" Column="31" />
+      <File FileName="MyWeather.UITests/Pages/WeatherPage.cs" Line="68" Column="1" />
       <File FileName="MyWeather.UITests/Pages/BasePage.cs" Line="36" Column="23" />
-      <File FileName="MyWeather/Services/WeatherService.cs" Line="52" Column="48" />
+      <File FileName="MyWeather/Services/WeatherService.cs" Line="51" Column="10" />
     </Files>
     <Pads>
       <Pad Id="MonoDevelop.UnitTesting.TestPad">
@@ -15,10 +14,12 @@
             <Node name="MyWeather.UITests" expanded="True">
               <Node name="Test Apps" expanded="True" />
               <Node name="MyWeather" expanded="True">
-                <Node name="UITests" expanded="True" selected="True">
+                <Node name="UITests" expanded="True">
                   <Node name="Tests" expanded="True">
                     <Node name="Tests(Android)" expanded="True">
-                      <Node name="GetWeatherUsingGPS" expanded="True" />
+                      <Node name="GetWeatherUsingGPS" expanded="True">
+                        <Node name="GetWeatherUsingGPS(True)" selected="True" />
+                      </Node>
                       <Node name="GetWeatherUsingText" expanded="True" />
                     </Node>
                     <Node name="Tests(iOS)" expanded="True">
