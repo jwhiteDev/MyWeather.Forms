@@ -32,7 +32,7 @@ namespace MyWeather.UITests
 		public void GetWeatherUsingText(string location, bool toggleScreensBeforeTest)
 		{
 			//Arrange
-			string expectedConditionCityText = location.Substring(0, location.IndexOf(",", StringComparison.Ordinal));
+			string expectedConditionCityText = ParseConditionCityFromString(location, ',');
 			string actualTemperatureLabelText, actualConditionCityText;
 
 			//Act
@@ -43,10 +43,10 @@ namespace MyWeather.UITests
 			WeatherPage.WaitForNoActivityIndicator();
 
 			//Assert
-			actualConditionCityText = WeatherPage.GetConditionText().Substring(0, WeatherPage.GetConditionText().IndexOf(":", StringComparison.Ordinal));
+			actualConditionCityText = ParseConditionCityFromString(WeatherPage.GetConditionText(), ':');
 			actualTemperatureLabelText = WeatherPage.GetTemperatureText();
-			Assert.AreEqual(expectedConditionCityText,actualConditionCityText, "Exptected Condition City Does Not Match Actual Condition City");
-			Assert.IsNotNull(actualTemperatureLabelText, "Temperature Text Is Null");
+			Assert.AreEqual(expectedConditionCityText, actualConditionCityText, "Exptected Condition City Does Not Match Actual Condition City");
+			Assert.IsNotEmpty(actualTemperatureLabelText, "Temperature Text Is Null");
 		}
 
 
@@ -68,8 +68,8 @@ namespace MyWeather.UITests
 			//Assert
 			actualConditionLabelText = WeatherPage.GetConditionText();
 			actualTemperatureLabelText = WeatherPage.GetTemperatureText();
-			Assert.IsNotNull(actualConditionLabelText, "Condition Text Is Null");
-			Assert.IsNotNull(actualTemperatureLabelText, "Temperature Text Is Null");
+			Assert.IsNotEmpty(actualConditionLabelText, "Condition Text Is Empty");
+			Assert.IsNotEmpty(actualTemperatureLabelText, "Temperature Text Is Empty");
 		}
 
 		[Ignore("This Test Will Crash The App")]
@@ -102,7 +102,7 @@ namespace MyWeather.UITests
 			if (!isToggleScreensEnabled)
 				return;
 
-			if(WeatherPage.IsWeatherPageVisible())
+			if (WeatherPage.IsWeatherPageVisible())
 			{
 				WeatherPage.TapForecastTab();
 				ForecastPage.TapWeatherTab();
@@ -112,6 +112,13 @@ namespace MyWeather.UITests
 				ForecastPage.TapWeatherTab();
 				WeatherPage.TapForecastTab();
 			}
+		}
+
+		string ParseConditionCityFromString(string location, char firstCharacterAfterCityText)
+		{
+			var indexOfFirstCharacterAfterCityTextInLocationString = location.IndexOf(firstCharacterAfterCityText.ToString(), StringComparison.Ordinal);
+
+			return location.Substring(0, Math.Max(indexOfFirstCharacterAfterCityTextInLocationString, 0));
 		}
 	}
 }

@@ -28,7 +28,6 @@ namespace MyWeather.Droid
 		{
 			global::Plugin.TextToSpeech.Resource.String.ApplicationName = global::MyWeather.Droid.Resource.String.ApplicationName;
 			global::Plugin.TextToSpeech.Resource.String.Hello = global::MyWeather.Droid.Resource.String.Hello;
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::MyWeather.Droid.Resource.Attribute.actionBarSize;
 			global::HockeyApp.Resource.Color.hockeyapp_background_header = global::MyWeather.Droid.Resource.Color.hockeyapp_background_header;
 			global::HockeyApp.Resource.Color.hockeyapp_background_light = global::MyWeather.Droid.Resource.Color.hockeyapp_background_light;
 			global::HockeyApp.Resource.Color.hockeyapp_background_white = global::MyWeather.Droid.Resource.Color.hockeyapp_background_white;
@@ -149,6 +148,7 @@ namespace MyWeather.Droid
 			global::HockeyApp.Resource.Style.HockeyApp_ButtonStyle = global::MyWeather.Droid.Resource.Style.HockeyApp_ButtonStyle;
 			global::HockeyApp.Resource.Style.HockeyApp_EditTextStyle = global::MyWeather.Droid.Resource.Style.HockeyApp_EditTextStyle;
 			global::HockeyApp.Resource.Style.HockeyApp_SingleLineInputStyle = global::MyWeather.Droid.Resource.Style.HockeyApp_SingleLineInputStyle;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::MyWeather.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation

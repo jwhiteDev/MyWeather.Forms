@@ -37,12 +37,14 @@ namespace MyWeather.UITests
 
 		public string GetConditionText()
 		{
-			return App.Query(ConditionLabel)?.First()?.Text;
+			App.WaitForElement(ConditionLabel);
+			return App.Query(ConditionLabel)?.FirstOrDefault()?.Text ?? string.Empty;
 		}
 
 		public string GetTemperatureText()
 		{
-			return App.Query(TempLabel)?.First()?.Text;
+			App.WaitForElement(TempLabel);
+			return App.Query(TempLabel)?.FirstOrDefault()?.Text ?? string.Empty;
 		}
 
 		public void TapGetWeatherButton()
