@@ -19,46 +19,55 @@ namespace MyWeather.Services
 
         public async Task<WeatherRoot> GetWeather(double latitude, double longitude, Units units = Units.Imperial)
         {
-            using (var client = new HttpClient())
-            {
-                var url = string.Format(WeatherCoordinatesUri, latitude, longitude, units.ToString().ToLower());
-                var json = await client.GetStringAsync(url);
+			return await Task.Run(async () =>
+			{
+				using (var client = new HttpClient())
+				{
+					var url = string.Format(WeatherCoordinatesUri, latitude, longitude, units.ToString().ToLower());
+					var json = await client.GetStringAsync(url);
 
-                if (string.IsNullOrWhiteSpace(json))
-                    return null;
+					if (string.IsNullOrWhiteSpace(json))
+						return null;
 
-                return DeserializeObject<WeatherRoot>(json);
-            }
+					return DeserializeObject<WeatherRoot>(json);
+				}
+			});
 
         }
 
         public async Task<WeatherRoot> GetWeather(string city, Units units = Units.Imperial)
         {
-            using (var client = new HttpClient())
-            {
-                var url = string.Format(WeatherCityUri, city, units.ToString().ToLower());
-                var json = await client.GetStringAsync(url);
+			return await Task.Run(async () =>
+			{
+				using (var client = new HttpClient())
+				{
+					var url = string.Format(WeatherCityUri, city, units.ToString().ToLower());
+					var json = await client.GetStringAsync(url);
 
-                if (string.IsNullOrWhiteSpace(json))
-                    return null;
+					if (string.IsNullOrWhiteSpace(json))
+						return null;
 
-                return DeserializeObject<WeatherRoot>(json);
-            }
+					return DeserializeObject<WeatherRoot>(json);
+				}
+			});
 
         }
 
         public async Task<WeatherForecastRoot> GetForecast(int id, Units units = Units.Imperial)
         {
-            using (var client = new HttpClient())
-            {
-                var url = string.Format(ForecaseUri, id, units.ToString().ToLower());
-                var json = await client.GetStringAsync(url);
+			return await Task.Run(async () =>
+			{
+				using (var client = new HttpClient())
+				{
+					var url = string.Format(ForecaseUri, id, units.ToString().ToLower());
+					var json = await client.GetStringAsync(url);
 
-                if (string.IsNullOrWhiteSpace(json))
-                    return null;
+					if (string.IsNullOrWhiteSpace(json))
+						return null;
 
-                return DeserializeObject<WeatherForecastRoot>(json);
-            }
+					return DeserializeObject<WeatherForecastRoot>(json);
+				}
+			});
 
         }
     }
