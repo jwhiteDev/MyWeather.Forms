@@ -68,6 +68,12 @@ namespace MyWeather.UITests
 			App.Screenshot($"Entered Location: {location}");
 		}
 
+		public void WaitForActivityIndicator(int timeoutInSeconds = 60)
+		{
+			App.WaitForElement(GetWeatherActivityIndicator, "Activity Indicator Never Appeared", TimeSpan.FromSeconds(timeoutInSeconds));
+			App.Screenshot("Activity Indicator Appeared");
+		}
+
 		public void WaitForNoActivityIndicator(int timeoutInSeconds = 60)
 		{
 			App.WaitForNoElement(GetWeatherActivityIndicator, "Activity Indicator Never Disappeared", TimeSpan.FromSeconds(timeoutInSeconds));

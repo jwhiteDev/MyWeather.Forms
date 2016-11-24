@@ -1,9 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
+using System.Threading;
+
 using NUnit.Framework;
+
 using Xamarin.UITest;
-using Xamarin.UITest.Queries;
 
 namespace MyWeather.UITests
 {
@@ -40,6 +40,9 @@ namespace MyWeather.UITests
 
 			WeatherPage.EnterLocation(location);
 			WeatherPage.TapGetWeatherButton();
+
+			Thread.Sleep(2000);
+
 			WeatherPage.WaitForNoActivityIndicator();
 
 			//Assert
@@ -63,6 +66,9 @@ namespace MyWeather.UITests
 
 			WeatherPage.ToggleGPSSwitch();
 			WeatherPage.TapGetWeatherButton();
+
+			Thread.Sleep(2000);
+
 			WeatherPage.WaitForNoActivityIndicator();
 
 			//Assert

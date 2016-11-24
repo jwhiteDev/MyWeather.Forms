@@ -22,8 +22,6 @@ namespace MyWeather.ViewModels
 	{
 		const string _errorMessage = "Unable to get Weather";
 
-		WeatherService WeatherService { get; } = new WeatherService();
-
 		string location = Settings.City;
 		public string Location
 		{
@@ -169,7 +167,7 @@ namespace MyWeather.ViewModels
 
 				var unit = IsImperial ? "F" : "C";
 				Temp = $"Temp: {weatherRoot?.MainWeather?.Temperature ?? 0}°{unit}";
-				Condition = $"{weatherRoot.Name}: {weatherRoot?.Weather?[0]?.Description ?? string.Empty}";
+				Condition = $"{weatherRoot?.Name}: {weatherRoot?.Weather?[0]?.Description ?? string.Empty}";
 				CrossTextToSpeech.Current.Speak(Temp + " " + Condition);
 			}
 			catch (Exception ex)
