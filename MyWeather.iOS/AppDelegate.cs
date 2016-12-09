@@ -34,6 +34,9 @@ namespace MyWeather.iOS
 
 			LoadApplication(new App());
 
+			var myButton = new UIButton();
+			myButton.AccessibilityIdentifier = "MyButton";
+
 			return base.FinishedLaunching(app, options);
 		}
 
