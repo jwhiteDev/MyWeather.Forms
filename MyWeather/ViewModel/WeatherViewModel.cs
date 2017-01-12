@@ -151,7 +151,6 @@ namespace MyWeather.ViewModels
 
 				if (UseGPS)
 				{
-
 					var gps = await CrossGeolocator.Current.GetPositionAsync(10000);
 					weatherRoot = await WeatherService.GetWeather(gps.Latitude, gps.Longitude, units);
 				}
