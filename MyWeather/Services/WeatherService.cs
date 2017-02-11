@@ -1,8 +1,11 @@
-﻿using MyWeather.Models;
+﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Newtonsoft.Json.JsonConvert;
-using System;
+
+using Newtonsoft.Json;
+
+using MyWeather.Models;
 using MyWeather.Helpers;
 
 namespace MyWeather.Services
@@ -15,28 +18,29 @@ namespace MyWeather.Services
 
 	public static class WeatherService
 	{
-		const string WeatherCoordinatesUri = "http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units={2}&appid=fc9f6c524fc093759cd28d41fda89a1b";
-		const string WeatherCityUri = "http://api.openweathermap.org/data/2.5/weather?q={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
-		const string ForecaseUri = "http://api.openweathermap.org/data/2.5/forecast?id={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
+		const string _weatherCoordinatesUri = "http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units={2}&appid=fc9f6c524fc093759cd28d41fda89a1b";
+		const string _weatherCityUri = "http://api.openweathermap.org/data/2.5/weather?q={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
+		const string _forecaseUri = "http://api.openweathermap.org/data/2.5/forecast?id={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 
-		static readonly TimeSpan HttpTimeout = TimeSpan.FromSeconds(20);
-		static readonly HttpClient Client = new HttpClient { Timeout = HttpTimeout };
+		static readonly TimeSpan _httpTimeout = TimeSpan.FromSeconds(20);
+		static readonly HttpClient _client = new HttpClient { Timeout = _httpTimeout };
+		static readonly JsonSerializer _serializer = new JsonSerializer();
 
 		public static async Task<WeatherRoot> GetWeather(double latitude, double longitude, Units units = Units.Imperial)
 		{
-			return await GetDataObjectFromAPI<WeatherRoot>(string.Format(WeatherCoordinatesUri, latitude, longitude, units.ToString().ToLower()));
+			return await GetDataObjectFromAPI<WeatherRoot>(string.Format(_weatherCoordinatesUri, latitude, longitude, units.ToString().ToLower()));
 
 		}
 
 		public static async Task<WeatherRoot> GetWeather(string city, Units units = Units.Imperial)
 		{
-			return await GetDataObjectFromAPI<WeatherRoot>(string.Format(WeatherCityUri, city, units.ToString().ToLower()));
+			return await GetDataObjectFromAPI<WeatherRoot>(string.Format(_weatherCityUri, city, units.ToString().ToLower()));
 
 		}
 
 		public static async Task<WeatherForecastRoot> GetForecast(int id, Units units = Units.Imperial)
 		{
-			return await GetDataObjectFromAPI<WeatherForecastRoot>(string.Format(ForecaseUri, id, units.ToString().ToLower()));
+			return await GetDataObjectFromAPI<WeatherForecastRoot>(string.Format(_forecaseUri, id, units.ToString().ToLower()));
 		}
 
 		static async Task<T> GetDataObjectFromAPI<T>(string apiUrl)
@@ -45,12 +49,16 @@ namespace MyWeather.Services
 			{
 				try
 				{
-					var json = await Client.GetStringAsync(apiUrl);
-
-					if (string.IsNullOrWhiteSpace(json))
-						return default(T);
-
-					return DeserializeObject<T>(json);
+					var response = await _client.GetAsync(apiUrl);
+					using (var stream = await response.Content.ReadAsStreamAsync())
+					using (var reader = new StreamReader(stream))
+					using (var json = new JsonTextReader(reader))
+					{
+						if (json == null)
+							return default(T);
+						
+						return _serializer.Deserialize<T>(json);
+					}
 				}
 				catch (Exception e)
 				{
