@@ -2,6 +2,9 @@
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
+
+using Xamarin.Forms;
 
 using Newtonsoft.Json;
 
@@ -18,14 +21,24 @@ namespace MyWeather.Services
 
 	public static class WeatherService
 	{
+		#region Constant Fields
 		const string _weatherCoordinatesUri = "http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units={2}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 		const string _weatherCityUri = "http://api.openweathermap.org/data/2.5/weather?q={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 		const string _forecaseUri = "http://api.openweathermap.org/data/2.5/forecast?id={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 
 		static readonly TimeSpan _httpTimeout = TimeSpan.FromSeconds(20);
-		static readonly HttpClient _client = new HttpClient { Timeout = _httpTimeout };
 		static readonly JsonSerializer _serializer = new JsonSerializer();
+		#endregion
 
+		#region Fields
+		static HttpClient _client;
+		#endregion
+
+		#region Properties
+		static HttpClient Client => _client ?? (_client = CreateHttpClient());
+		#endregion
+
+		#region Methods
 		public static async Task<WeatherRoot> GetWeather(double latitude, double longitude, Units units = Units.Imperial)
 		{
 			return await GetDataObjectFromAPI<WeatherRoot>(string.Format(_weatherCoordinatesUri, latitude, longitude, units.ToString().ToLower()));
@@ -49,14 +62,14 @@ namespace MyWeather.Services
 			{
 				try
 				{
-					var response = await _client.GetAsync(apiUrl);
+					var response = await Client.GetAsync(apiUrl);
 					using (var stream = await response.Content.ReadAsStreamAsync())
 					using (var reader = new StreamReader(stream))
 					using (var json = new JsonTextReader(reader))
 					{
 						if (json == null)
 							return default(T);
-						
+
 						return _serializer.Deserialize<T>(json);
 					}
 				}
@@ -65,8 +78,25 @@ namespace MyWeather.Services
 					HockeyappHelpers.Report(e);
 					return default(T);
 				}
-
 			});
 		}
+
+		static HttpClient CreateHttpClient()
+		{
+			HttpClient client;
+
+			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
+				client = new HttpClient { Timeout = _httpTimeout };
+			else
+				client = new HttpClient(new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip })
+				{
+					Timeout = _httpTimeout
+				};
+
+			client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+
+			return client;
+		}
+		#endregion
 	}
 }

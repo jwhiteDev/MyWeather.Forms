@@ -1,9 +1,7 @@
 ﻿using Xamarin.Forms;
 
-using HockeyApp;
-using System;
 using MyWeather.Helpers;
-using MyWeather.Services;
+using MyWeather.ViewModels;
 
 namespace MyWeather.View
 {
@@ -13,15 +11,15 @@ namespace MyWeather.View
 		{
 			InitializeComponent();
 
-			if (Device.OS == TargetPlatform.iOS)
-				Icon = new FileImageSource { File = "tab1.png" };
+			Icon = new FileImageSource { File = "tab1.png" };
 
+			var viewModel = BindingContext as WeatherViewModel;
 			var feedbackToolBarItem = new ToolbarItem
 			{
 				Icon = "Add",
 				AutomationId = AutomationIdConstants.FeedbackButton
 			};
-			feedbackToolBarItem.SetBinding(ToolbarItem.CommandProperty, "FeedbackButtonTapped");
+			feedbackToolBarItem.SetBinding(ToolbarItem.CommandProperty, nameof(viewModel.FeedbackButtonTapped));
 			ToolbarItems.Add(feedbackToolBarItem);
 
 			InitializeAutomationIds();
