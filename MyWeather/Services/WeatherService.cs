@@ -21,15 +21,31 @@ namespace MyWeather.Services
 
 	public static class WeatherService
 	{
+		#region Constant Fields
 		const string _weatherCoordinatesUri = "http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units={2}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 		const string _weatherCityUri = "http://api.openweathermap.org/data/2.5/weather?q={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 		const string _forecaseUri = "http://api.openweathermap.org/data/2.5/forecast?id={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 
 		static readonly TimeSpan _httpTimeout = TimeSpan.FromSeconds(20);
 		static readonly JsonSerializer _serializer = new JsonSerializer();
+		#endregion
 
+		#region Fields
 		static HttpClient _client;
+		#endregion
 
+		#region Properties
+		static HttpClient Client
+		{
+			get 
+			{
+				IntializeHttpClient();
+				return _client;
+			}
+		}
+		#endregion
+
+		#region Methods
 		public static async Task<WeatherRoot> GetWeather(double latitude, double longitude, Units units = Units.Imperial)
 		{
 			return await GetDataObjectFromAPI<WeatherRoot>(string.Format(_weatherCoordinatesUri, latitude, longitude, units.ToString().ToLower()));
@@ -53,9 +69,7 @@ namespace MyWeather.Services
 			{
 				try
 				{
-					IntializeHttpClient();
-
-					var response = await _client.GetAsync(apiUrl);
+					var response = await Client.GetAsync(apiUrl);
 					using (var stream = await response.Content.ReadAsStreamAsync())
 					using (var reader = new StreamReader(stream))
 					using (var json = new JsonTextReader(reader))
@@ -89,5 +103,6 @@ namespace MyWeather.Services
 
 			_client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 		}
+		#endregion
 	}
 }
