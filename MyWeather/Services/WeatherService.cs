@@ -2,6 +2,9 @@
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
+
+using Xamarin.Forms;
 
 using Newtonsoft.Json;
 
@@ -23,8 +26,9 @@ namespace MyWeather.Services
 		const string _forecaseUri = "http://api.openweathermap.org/data/2.5/forecast?id={0}&units={1}&appid=fc9f6c524fc093759cd28d41fda89a1b";
 
 		static readonly TimeSpan _httpTimeout = TimeSpan.FromSeconds(20);
-		static readonly HttpClient _client = new HttpClient { Timeout = _httpTimeout };
 		static readonly JsonSerializer _serializer = new JsonSerializer();
+
+		static HttpClient _client;
 
 		public static async Task<WeatherRoot> GetWeather(double latitude, double longitude, Units units = Units.Imperial)
 		{
@@ -49,6 +53,8 @@ namespace MyWeather.Services
 			{
 				try
 				{
+					IntializeHttpClient();
+
 					var response = await _client.GetAsync(apiUrl);
 					using (var stream = await response.Content.ReadAsStreamAsync())
 					using (var reader = new StreamReader(stream))
@@ -56,7 +62,7 @@ namespace MyWeather.Services
 					{
 						if (json == null)
 							return default(T);
-						
+
 						return _serializer.Deserialize<T>(json);
 					}
 				}
@@ -65,8 +71,23 @@ namespace MyWeather.Services
 					HockeyappHelpers.Report(e);
 					return default(T);
 				}
-
 			});
+		}
+
+		static void IntializeHttpClient()
+		{
+			if (_client != null)
+				return;
+
+			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
+				_client = new HttpClient { Timeout = _httpTimeout };
+			else
+				_client = new HttpClient(new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip })
+				{
+					Timeout = _httpTimeout
+				};
+
+			_client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 		}
 	}
 }
