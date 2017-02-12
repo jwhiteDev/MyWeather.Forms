@@ -35,14 +35,7 @@ namespace MyWeather.Services
 		#endregion
 
 		#region Properties
-		static HttpClient Client
-		{
-			get 
-			{
-				IntializeHttpClient();
-				return _client;
-			}
-		}
+		static HttpClient Client => _client ?? (_client = CreateHttpClient());
 		#endregion
 
 		#region Methods
@@ -88,20 +81,21 @@ namespace MyWeather.Services
 			});
 		}
 
-		static void IntializeHttpClient()
+		static HttpClient CreateHttpClient()
 		{
-			if (_client != null)
-				return;
+			HttpClient client;
 
 			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
-				_client = new HttpClient { Timeout = _httpTimeout };
+				client = new HttpClient { Timeout = _httpTimeout };
 			else
-				_client = new HttpClient(new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip })
+				client = new HttpClient(new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip })
 				{
 					Timeout = _httpTimeout
 				};
 
-			_client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+			client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+
+			return client;
 		}
 		#endregion
 	}
