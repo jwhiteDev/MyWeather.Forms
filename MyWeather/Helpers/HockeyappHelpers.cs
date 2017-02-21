@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Text;
+using System.Diagnostics;
 using System.Collections.Generic;
-using MyWeather.Services;
-using Xamarin.Forms;
 using System.Runtime.CompilerServices;
+
+using MyWeather.Services;
+
+using Xamarin.Forms;
 
 namespace MyWeather.Helpers
 {
@@ -44,12 +48,17 @@ namespace MyWeather.Helpers
 		{
 			var fileName = GetFileNameFromFilePath(filePath);
 
-			var errorReport = $"Error: {exception.Message} ";
-			errorReport += $"Line Number: {lineNumber} ";
-			errorReport += $"Caller Name: {callerMembername} ";
-			errorReport += $"File Name: {fileName}";
+			var errorReport = new StringBuilder();
 
-			TrackEvent(errorReport);
+			errorReport.Append($"{exception.GetType()} ");
+			errorReport.Append($"Error: {exception.Message} ");
+			errorReport.Append($"Line Number: {lineNumber} ");
+			errorReport.Append($"Caller Name: {callerMembername} ");
+			errorReport.Append($"File Name: {fileName}");
+
+			TrackEvent(errorReport.ToString());
+
+			Debug.WriteLine(errorReport.ToString());
 		}
 
 		static string GetFileNameFromFilePath(string filePath)
