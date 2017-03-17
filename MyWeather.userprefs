@@ -1,22 +1,20 @@
 ﻿<Properties StartupConfiguration="{65B45A0F-D6D8-432F-B36D-D7D41675DC76}|Default">
-  <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android._Nexus_5_API_24" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather.UITests/Tests/Tests.cs">
+  <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android._Nexus_5_API_25" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather/Helpers/Settings.cs">
     <Files>
       <File FileName="MyWeather/Services/WeatherService.cs" Line="78" Column="24" />
-      <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="9" Column="21" />
+      <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="40" Column="67" />
       <File FileName="MyWeather.UITests/Tests/Tests.cs" Line="81" Column="7" />
+      <File FileName="MyWeather.Droid/MainActivity.cs" Line="56" Column="47" />
+      <File FileName="MyWeather/ViewModel/WeatherViewModel.cs" Line="131" Column="1" />
+      <File FileName="MyWeather.UWP/Services/HockeyappTrackEventService_UWP.cs" Line="16" Column="18" />
+      <File FileName="MyWeather/Constants/HockeyappConstants.cs" Line="8" Column="29" />
+      <File FileName="MyWeather.UWP/Package.appxmanifest" Line="1" Column="1" />
+      <File FileName="MyWeather.UWP/project.json" Line="7" Column="35" />
+      <File FileName="MyWeather/Helpers/Settings.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="MyWeather" expanded="True" selected="True">
-            <Node name="MyWeather.UITests" expanded="True" />
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
