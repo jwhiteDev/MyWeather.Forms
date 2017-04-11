@@ -1,41 +1,16 @@
 ﻿<Properties StartupConfiguration="{7F106FBA-12E5-4D92-9F4C-38EAD1652E7E}|Default">
   <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android._Nexus_5_API_25" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather.UWP/project.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather.UWP/Services/HockeyappFeedbackService_UWP.cs">
     <Files>
       <File FileName="MyWeather/Services/WeatherService.cs" Line="78" Column="24" />
       <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="51" Column="1" />
       <File FileName="MyWeather.UITests/Tests/Tests.cs" Line="81" Column="7" />
       <File FileName="MyWeather.Droid/MainActivity.cs" Line="56" Column="47" />
       <File FileName="MyWeather/ViewModel/WeatherViewModel.cs" Line="1" Column="1" />
-      <File FileName="MyWeather.UWP/Services/HockeyappTrackEventService_UWP.cs" Line="16" Column="18" />
-      <File FileName="MyWeather/Constants/HockeyappConstants.cs" Line="8" Column="29" />
       <File FileName="MyWeather.UWP/Package.appxmanifest" Line="1" Column="1" />
       <File FileName="MyWeather.UWP/project.json" Line="5" Column="27" />
+      <File FileName="MyWeather.UWP/Services/HockeyappFeedbackService_UWP.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="MyWeather" expanded="True" selected="True">
-            <Node name="MyWeather.UITests" expanded="True">
-              <Node name="MyWeather" expanded="True">
-                <Node name="UITests" expanded="True">
-                  <Node name="Tests" expanded="True">
-                    <Node name="Tests(Android)" expanded="True">
-                      <Node name="GetWeatherUsingGPS" expanded="True" />
-                      <Node name="GetWeatherUsingText" expanded="True" />
-                    </Node>
-                    <Node name="Tests(iOS)" expanded="True">
-                      <Node name="GetWeatherUsingGPS" expanded="True" />
-                      <Node name="GetWeatherUsingText" expanded="True" />
-                    </Node>
-                  </Node>
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
@@ -45,5 +20,5 @@
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.MyWeather.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.B0420AE0-2C4B-4AFD-8192-E46BA249A743" />
+  <MonoDevelop.Ide.ItemProperties.MyWeather.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.0B459A8D-A8F4-41F4-AFE6-0A0B8C837543" />
 </Properties>
