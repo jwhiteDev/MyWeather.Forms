@@ -16,13 +16,13 @@ namespace MyWeather.Helpers
 
 		public static void TrackEvent(string eventName)
 		{
-			switch (Device.OS)
+			switch (Device.RuntimePlatform)
 			{
-				case TargetPlatform.iOS:
-				case TargetPlatform.Android:
+				case Device.iOS:
+				case Device.Android:
 					HockeyApp.MetricsManager.TrackEvent(eventName);
 					break;
-				case TargetPlatform.Windows:
+				case Device.Windows:
 					DependencyService.Get<IHockeyappTrackEventService>()?.TrackEvent(eventName);
 					break;
 			}
@@ -30,13 +30,13 @@ namespace MyWeather.Helpers
 
 		public static void TrackEvent(string eventName, Dictionary<string, string> properties, Dictionary<string, double> measurements)
 		{
-			switch (Device.OS)
+			switch (Device.RuntimePlatform)
 			{
-				case TargetPlatform.iOS:
-				case TargetPlatform.Android:
+				case Device.iOS:
+				case Device.Android:
 					HockeyApp.MetricsManager.TrackEvent(eventName, properties, measurements);
 					break;
-				case TargetPlatform.Windows:
+				case Device.Windows:
 					DependencyService.Get<IHockeyappTrackEventService>()?.TrackEvent(eventName, properties, measurements);
 					break;
 			}

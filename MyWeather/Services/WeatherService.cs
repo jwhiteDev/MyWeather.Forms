@@ -31,11 +31,7 @@ namespace MyWeather.Services
 		#endregion
 
 		#region Fields
-		static HttpClient _client;
-		#endregion
-
-		#region Properties
-		static HttpClient Client => _client ?? (_client = CreateHttpClient());
+		readonly static HttpClient _client = CreateHttpClient();
 		#endregion
 
 		#region Methods
@@ -62,8 +58,7 @@ namespace MyWeather.Services
 			{
 				try
 				{
-					var response = await Client.GetAsync(apiUrl);
-					using (var stream = await response.Content.ReadAsStreamAsync())
+					using (var stream = await _client.GetStreamAsync(apiUrl).ConfigureAwait(false))
 					using (var reader = new StreamReader(stream))
 					using (var json = new JsonTextReader(reader))
 					{
@@ -83,15 +78,10 @@ namespace MyWeather.Services
 
 		static HttpClient CreateHttpClient()
 		{
-			HttpClient client;
-
-			if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
-				client = new HttpClient { Timeout = _httpTimeout };
-			else
-				client = new HttpClient(new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip })
-				{
-					Timeout = _httpTimeout
-				};
+			var client = new HttpClient(new HttpClientHandler { AutomaticDecompression = System.Net.DecompressionMethods.GZip })
+			{
+				Timeout = _httpTimeout
+			};
 
 			client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 

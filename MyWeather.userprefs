@@ -1,9 +1,20 @@
 ﻿<Properties StartupConfiguration="{65B45A0F-D6D8-432F-B36D-D7D41675DC76}|Default">
-  <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android._Nexus_5_API_24" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather.iOS/AppDelegate.cs">
+  <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android._Nexus_5_API_23" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather/Helpers/HockeyappHelpers.cs">
     <Files>
-      <File FileName="MyWeather.iOS/AppDelegate.cs" Line="70" Column="3" />
+      <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="21" Column="16" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="MyWeather" expanded="True">
+            <Node name="MyWeather.UITests" expanded="True">
+              <Node name="MyWeather" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
