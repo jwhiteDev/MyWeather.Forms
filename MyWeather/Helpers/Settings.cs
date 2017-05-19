@@ -1,76 +1,41 @@
-// Helpers/Settings.cs
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 
 namespace MyWeather.Helpers
 {
-    /// <summary>
-    /// This is the Settings static class that can be used in your Core solution or in any
-    /// of your client applications. All settings are laid out the same exact way with getters
-    /// and setters. 
-    /// </summary>
     public static class Settings
     {
-        private static ISettings AppSettings
-        {
-            get
-            {
-                return CrossSettings.Current;
-            }
-        }
+        #region Constant Fields
+        const string IsImperialKey = "is_imperial";
+        const string UseCityKey = "use_city";
+        const string CityKey = "city";
+        const string CityDefault = "Seattle,WA";
 
-        #region Setting Constants
-
-        private const string IsImperialKey = "is_imperial";
-        private static readonly bool IsImperialDefault = true;
-
-
-        private const string UseCityKey = "use_city";
-        private static readonly bool UseCityDefault = true;
-
-
-        private const string CityKey = "city";
-        private static readonly string CityDefault = "Seattle,WA";
-
+        static readonly bool IsImperialDefault = true;
+        static readonly bool UseCityDefault = true;
         #endregion
 
-
+        #region Properties
         public static bool IsImperial
         {
-            get
-            {
-                return AppSettings.GetValueOrDefault(IsImperialKey, IsImperialDefault);
-            }
-            set
-            {
-                AppSettings.AddOrUpdateValue(IsImperialKey, value);
-            }
+            get => AppSettings.GetValueOrDefault(IsImperialKey, IsImperialDefault);
+            set => AppSettings.AddOrUpdateValue(IsImperialKey, value);
         }
-
 
         public static bool UseCity
         {
-            get
-            {
-                return AppSettings.GetValueOrDefault(UseCityKey, UseCityDefault);
-            }
-            set
-            {
-                AppSettings.AddOrUpdateValue(UseCityKey, value);
-            }
+            get => AppSettings.GetValueOrDefault(UseCityKey, UseCityDefault);
+            set => AppSettings.AddOrUpdateValue(UseCityKey, value);
         }
 
         public static string City
         {
-            get
-            {
-                return AppSettings.GetValueOrDefault(CityKey, CityDefault);
-            }
-            set
-            {
-                AppSettings.AddOrUpdateValue(CityKey, value);
-            }
+            get => AppSettings.GetValueOrDefault(CityKey, CityDefault);
+            set => AppSettings.AddOrUpdateValue(CityKey, value);
         }
+
+		static ISettings AppSettings => CrossSettings.Current;
+        #endregion
 
     }
 }

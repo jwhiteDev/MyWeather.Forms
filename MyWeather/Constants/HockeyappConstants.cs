@@ -1,5 +1,4 @@
-﻿using System;
-namespace MyWeather
+﻿namespace MyWeather
 {
 	public static class HockeyappConstants
 	{

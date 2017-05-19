@@ -1,5 +1,4 @@
-﻿using System;
-namespace MyWeather
+﻿namespace MyWeather.Shared
 {
 	public static class AutomationIdConstants
 	{

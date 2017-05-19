@@ -1,16 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 using Xamarin.Forms;
 
 using Plugin.Geolocator;
 using Plugin.TextToSpeech;
-
-using HockeyApp;
 
 using MyWeather.Models;
 using MyWeather.Helpers;
@@ -18,204 +14,169 @@ using MyWeather.Services;
 
 namespace MyWeather.ViewModels
 {
-	public class WeatherViewModel : INotifyPropertyChanged
-	{
-		const string _errorMessage = "Unable to get Weather";
+    public class WeatherViewModel : BaseViewModel
+    {
+        #region Constant Fields
+        const string _errorMessage = "Unable to get Weather";
+        #endregion
 
-		string location = Settings.City;
-		public string Location
-		{
-			get { return location; }
-			set
-			{
-				location = value;
-				OnPropertyChanged();
-				Settings.City = value;
-			}
-		}
+        #region Fields
+        bool _useGPS, _isBusy;
+        string _temp = string.Empty, _condition = string.Empty;
+        WeatherForecastRoot _forecast;
+        ICommand _getWeather, _crashButtonTapped, _feedbackButtonTapped;
+        #endregion
 
-		bool useGPS;
-		public bool UseGPS
-		{
-			get { return useGPS; }
-			set
-			{
-				HockeyappHelpers.TrackEvent(HockeyappConstants.GPSSwitchToggled,
-					new Dictionary<string, string> { { "Use GPS Value", value.ToString() } },
-					null);
+        #region Properties
+        public ICommand GetWeatherCommand => _getWeather ??
+            (_getWeather = new Command(async () => await ExecuteGetWeatherCommand()));
 
-				useGPS = value;
-				OnPropertyChanged();
-			}
-		}
+        public ICommand CrashButtonTapped => _crashButtonTapped ??
+            (_crashButtonTapped = new Command(ExecuteCrashButtonCommand));
 
+        public ICommand FeedbackButtonTapped => _feedbackButtonTapped ??
+            (_feedbackButtonTapped = new Command(ExecuteFeedbackButtonCommand));
 
+        public string Location
+        {
+            get => Settings.City;
+            set
+            {
+                Settings.City = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public bool UseGPS
+        {
+            get => _useGPS;
+            set
+            {
+                HockeyappHelpers.TrackEvent(HockeyappConstants.GPSSwitchToggled,
+                    new Dictionary<string, string> { { "Use GPS Value", value.ToString() } },
+                    null);
 
-		bool isImperial = Settings.IsImperial;
-		public bool IsImperial
-		{
-			get { return isImperial; }
-			set
-			{
-				isImperial = value;
-				OnPropertyChanged();
-				Settings.IsImperial = value;
-			}
-		}
+                SetProperty(ref _useGPS, value);
+            }
+        }
 
+        public bool IsImperial
+        {
+            get => Settings.IsImperial;
+            set
+            {
+                Settings.IsImperial = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public string Temp
+        {
+            get => _temp;
+            set => SetProperty(ref _temp, value);
+        }
 
-		string temp = string.Empty;
-		public string Temp
-		{
-			get { return temp; }
-			set { temp = value; OnPropertyChanged(); }
-		}
+        public string Condition
+        {
+            get => _condition;
+            set => SetProperty(ref _condition, value);
+        }
 
-		string condition = string.Empty;
-		public string Condition
-		{
-			get { return condition; }
-			set { condition = value; OnPropertyChanged(); }
-		}
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
+        public WeatherForecastRoot Forecast
+        {
+            get => _forecast;
+            set => SetProperty(ref _forecast, value);
+        }
+        #endregion
 
+        void ExecuteCrashButtonCommand()
+        {
+            HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
+            throw new Exception(HockeyappConstants.CrashButtonTapped);
+        }
 
+        void ExecuteFeedbackButtonCommand()
+        {
+            HockeyappHelpers.TrackEvent(HockeyappConstants.FeedbackButtonTapped);
+            DependencyService.Get<IHockeyappFeedbackService>()?.GiveFeedback();
+        }
 
-		bool isBusy = false;
-		public bool IsBusy
-		{
-			get { return isBusy; }
-			set { isBusy = value; OnPropertyChanged(); }
-		}
+        async Task ExecuteGetWeatherCommand()
+        {
+            if (IsBusy)
+                return;
 
-		WeatherForecastRoot forecast;
-		public WeatherForecastRoot Forecast
-		{
-			get { return forecast; }
-			set { forecast = value; OnPropertyChanged(); }
-		}
-
-
-		ICommand getWeather;
-		public ICommand GetWeatherCommand =>
-				getWeather ??
-		(getWeather = new Command(async () =>
-		{
-			await ExecuteGetWeatherCommand();
-		}));
-
-
-		ICommand crashButtonTapped;
-		public ICommand CrashButtonTapped =>
-				crashButtonTapped ??
-		(crashButtonTapped = new Command(() =>
-		{
-
-			ExecuteCrashButtonCommand();
-		}));
-
-
-		ICommand feedbackButtonTapped;
-		public ICommand FeedbackButtonTapped =>
-				feedbackButtonTapped ??
-		(feedbackButtonTapped = new Command(() =>
-		{
-			ExecuteFeedbackButtonCommand();
-		}));
+            IsBusy = true;
+            try
+            {
+                WeatherRoot weatherRoot = null;
+                var units = IsImperial ? Units.Imperial : Units.Metric;
 
 
-		private void ExecuteCrashButtonCommand()
-		{
-			HockeyappHelpers.TrackEvent(HockeyappConstants.CrashButtonTapped);
-			throw new Exception(HockeyappConstants.CrashButtonTapped);
-		}
-
-		private void ExecuteFeedbackButtonCommand()
-		{
-			HockeyappHelpers.TrackEvent(HockeyappConstants.FeedbackButtonTapped);
-			DependencyService.Get<IHockeyappFeedbackService>()?.GiveFeedback();
-		}
-
-		private async Task ExecuteGetWeatherCommand()
-		{
-			if (IsBusy)
-				return;
-
-			IsBusy = true;
-			try
-			{
-				WeatherRoot weatherRoot = null;
-				var units = IsImperial ? Units.Imperial : Units.Metric;
+                if (UseGPS)
+                {
+                    var gps = await CrossGeolocator.Current.GetPositionAsync(10000);
+                    weatherRoot = await WeatherService.GetWeather(gps.Latitude, gps.Longitude, units);
+                }
+                else
+                {
+                    //Get weather by city
+                    weatherRoot = await WeatherService.GetWeather(Location.Trim(), units);
+                }
 
 
-				if (UseGPS)
-				{
-					var gps = await CrossGeolocator.Current.GetPositionAsync(10000);
-					weatherRoot = await WeatherService.GetWeather(gps.Latitude, gps.Longitude, units);
-				}
-				else
-				{
-					//Get weather by city
-					weatherRoot = await WeatherService.GetWeather(Location.Trim(), units);
-				}
+                //Get forecast based on cityId
+                Forecast = await WeatherService.GetForecast(weatherRoot.CityId, units);
 
+                var unit = IsImperial ? "F" : "C";
+                Temp = $"Temp: {weatherRoot?.MainWeather?.Temperature ?? 0}°{unit}";
+                Condition = $"{weatherRoot?.Name}: {weatherRoot?.Weather?[0]?.Description ?? string.Empty}";
+                CrossTextToSpeech.Current.Speak(Temp + " " + Condition);
+            }
+            catch (Exception ex)
+            {
+                Temp = _errorMessage;
+                HockeyappHelpers.Report(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+                TrackGetWeatherEvent();
+            }
+        }
 
-				//Get forecast based on cityId
-				Forecast = await WeatherService.GetForecast(weatherRoot.CityId, units);
+        void TrackGetWeatherEvent()
+        {
+            var eventDictionaryHockeyApp = new Dictionary<string, string>
+            {
+                {"Use GPS Enabled", UseGPS.ToString()}
+            };
 
-				var unit = IsImperial ? "F" : "C";
-				Temp = $"Temp: {weatherRoot?.MainWeather?.Temperature ?? 0}°{unit}";
-				Condition = $"{weatherRoot?.Name}: {weatherRoot?.Weather?[0]?.Description ?? string.Empty}";
-				CrossTextToSpeech.Current.Speak(Temp + " " + Condition);
-			}
-			catch (Exception ex)
-			{
-				Temp = _errorMessage;
-				HockeyappHelpers.Report(ex);
-			}
-			finally
-			{
-				IsBusy = false;
-				TrackGetWeatherEvent();
-			}
-		}
+            try
+            {
+                if (!Temp.Contains(_errorMessage))
+                {
 
-		void TrackGetWeatherEvent()
-		{
-			var eventDictionaryHockeyApp = new Dictionary<string, string>
-			{
-				{"Use GPS Enabled", UseGPS.ToString()}
-			};
+                    var locationCityName = UseGPS
+                        ? Condition?.Substring(0, Condition.IndexOf(":", StringComparison.Ordinal))
+                        : Location?.Substring(0, Location.IndexOf(",", StringComparison.Ordinal));
 
-			try
-			{
-				if (!Temp.Contains(_errorMessage))
-				{
-
-					var locationCityName = UseGPS
-						? Condition?.Substring(0, Condition.IndexOf(":", StringComparison.Ordinal))
-						: Location?.Substring(0, Location.IndexOf(",", StringComparison.Ordinal));
-
-					eventDictionaryHockeyApp.Add("Location", locationCityName);
-				}
-			}
-			catch (Exception ex)
-			{
-				HockeyappHelpers.Report(ex);
-			}
-			finally
-			{
-				HockeyappHelpers.TrackEvent(HockeyappConstants.GetWeatherButtonTapped, eventDictionaryHockeyApp, null);
-			}
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public void OnPropertyChanged([CallerMemberName]string name = "")
-		{
-			var handle = PropertyChanged;
-			handle?.Invoke(this, new PropertyChangedEventArgs(name));
-		}
-	}
+                    eventDictionaryHockeyApp.Add("Location", locationCityName);
+                }
+            }
+            catch (Exception ex)
+            {
+                HockeyappHelpers.Report(ex);
+            }
+            finally
+            {
+                HockeyappHelpers.TrackEvent(HockeyappConstants.GetWeatherButtonTapped, eventDictionaryHockeyApp, null);
+            }
+        }
+    }
 }

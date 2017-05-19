@@ -4,6 +4,8 @@ using System.Threading;
 
 using Xamarin.UITest;
 
+using MyWeather.Shared;
+
 using Query = System.Func<Xamarin.UITest.Queries.AppQuery, Xamarin.UITest.Queries.AppQuery>;
 
 namespace MyWeather.UITests

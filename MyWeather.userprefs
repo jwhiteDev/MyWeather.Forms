@@ -1,21 +1,7 @@
 ﻿<Properties StartupConfiguration="{65B45A0F-D6D8-432F-B36D-D7D41675DC76}|Default">
-  <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android._Nexus_5_API_23" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="MyWeather/Helpers/HockeyappHelpers.cs">
-    <Files>
-      <File FileName="MyWeather/Helpers/HockeyappHelpers.cs" Line="21" Column="16" />
-    </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="MyWeather" expanded="True">
-            <Node name="MyWeather.UITests" expanded="True">
-              <Node name="MyWeather" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.MyWeather.Android PreferredExecutionTarget="Android._Nexus_5_API_25" />
+  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.ItemProperties.MyWeather HideGettingStarted="True" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
@@ -25,4 +11,5 @@
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.MyWeather.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.0B459A8D-A8F4-41F4-AFE6-0A0B8C837543" />
+  <MonoDevelop.Ide.ItemProperties.MyWeather.Shared HideGettingStarted="True" />
 </Properties>
