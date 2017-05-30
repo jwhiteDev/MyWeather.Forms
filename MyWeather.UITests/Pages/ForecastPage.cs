@@ -1,5 +1,6 @@
-﻿using System;
-using Xamarin.UITest;
+﻿using Xamarin.UITest;
+
+using MyWeather.Shared;
 
 using Query = System.Func<Xamarin.UITest.Queries.AppQuery, Xamarin.UITest.Queries.AppQuery>;
 
@@ -7,9 +8,9 @@ namespace MyWeather.UITests
 {
 	public class ForecastPage : BasePage
 	{
-		Query Crashbutton;
+        readonly Query Crashbutton;
 
-		public ForecastPage(IApp app, Platform platform) : base(app, platform, AutomationIdConstants.ForecastPageTitle)
+        public ForecastPage(IApp app, Platform platform) : base(app, platform, AutomationIdConstants.ForecastPageTitle)
 		{
 			if (OniOS)
 				Crashbutton = x => x.Marked(AutomationIdConstants.CrashButton);

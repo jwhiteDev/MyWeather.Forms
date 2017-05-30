@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Text;
+using System.Diagnostics;
 using System.Collections.Generic;
-using MyWeather.Services;
-using Xamarin.Forms;
 using System.Runtime.CompilerServices;
+
+using MyWeather.Services;
+
+using Xamarin.Forms;
 
 namespace MyWeather.Helpers
 {
@@ -12,13 +16,13 @@ namespace MyWeather.Helpers
 
 		public static void TrackEvent(string eventName)
 		{
-			switch (Device.OS)
+			switch (Device.RuntimePlatform)
 			{
-				case TargetPlatform.iOS:
-				case TargetPlatform.Android:
+				case Device.iOS:
+				case Device.Android:
 					HockeyApp.MetricsManager.TrackEvent(eventName);
 					break;
-				case TargetPlatform.Windows:
+				case Device.Windows:
 					DependencyService.Get<IHockeyappTrackEventService>()?.TrackEvent(eventName);
 					break;
 			}
@@ -26,13 +30,13 @@ namespace MyWeather.Helpers
 
 		public static void TrackEvent(string eventName, Dictionary<string, string> properties, Dictionary<string, double> measurements)
 		{
-			switch (Device.OS)
+			switch (Device.RuntimePlatform)
 			{
-				case TargetPlatform.iOS:
-				case TargetPlatform.Android:
+				case Device.iOS:
+				case Device.Android:
 					HockeyApp.MetricsManager.TrackEvent(eventName, properties, measurements);
 					break;
-				case TargetPlatform.Windows:
+				case Device.Windows:
 					DependencyService.Get<IHockeyappTrackEventService>()?.TrackEvent(eventName, properties, measurements);
 					break;
 			}
@@ -44,12 +48,17 @@ namespace MyWeather.Helpers
 		{
 			var fileName = GetFileNameFromFilePath(filePath);
 
-			var errorReport = $"Error: {exception.Message} ";
-			errorReport += $"Line Number: {lineNumber} ";
-			errorReport += $"Caller Name: {callerMembername} ";
-			errorReport += $"File Name: {fileName}";
+			var errorReport = new StringBuilder();
 
-			TrackEvent(errorReport);
+			errorReport.Append($"{exception.GetType()} ");
+			errorReport.Append($"Error: {exception.Message} ");
+			errorReport.Append($"Line Number: {lineNumber} ");
+			errorReport.Append($"Caller Name: {callerMembername} ");
+			errorReport.Append($"File Name: {fileName}");
+
+			TrackEvent(errorReport.ToString());
+
+			Debug.WriteLine(errorReport.ToString());
 		}
 
 		static string GetFileNameFromFilePath(string filePath)

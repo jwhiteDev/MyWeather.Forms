@@ -31,7 +31,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.UITest">
-      <HintPath>..\packages\Xamarin.UITest.2.0.7\lib\Xamarin.UITest.dll</HintPath>
+      <HintPath>..\packages\Xamarin.UITest.2.0.9\lib\Xamarin.UITest.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -51,10 +51,6 @@
     <Folder Include="Tests\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyWeather\MyWeather.csproj">
-      <Project>{5366CC83-65A3-4969-B883-3229108447E2}</Project>
-      <Name>MyWeather</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MyWeather.iOS\MyWeather.iOS.csproj">
       <Project>{7F106FBA-12E5-4D92-9F4C-38EAD1652E7E}</Project>
       <Name>MyWeather.iOS</Name>
@@ -68,5 +64,6 @@
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="..\MyWeather.Shared\MyWeather.Shared.projitems" Label="Shared" Condition="Exists('..\MyWeather.Shared\MyWeather.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,6 @@
 ﻿using Xamarin.Forms;
 
+using MyWeather.Shared;
 using MyWeather.Helpers;
 using MyWeather.ViewModels;
 
