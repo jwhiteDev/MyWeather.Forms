@@ -1,4 +1,4 @@
-[![Build Status](https://www.bitrise.io/app/ed30338a8e7ab2d6.svg?token=3p30FUjBZd47bHdm229V1g&branch=master)](https://www.bitrise.io/app/ed30338a8e7ab2d6)
+Updating this for builds
 
 MyWeather.Forms
 ===================
